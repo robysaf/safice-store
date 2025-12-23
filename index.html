@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Safice Store - L'expérience Ultime</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #ff3b30;
+            --primary-light: #ff6b6b;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --bg-body: #f8f9fb;
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            --card-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            --radius-xl: 22px;
+            --radius-m: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 80px; /* Espace pour la nav bar */
+        }
+
+        /* --- HEADER & RECHERCHE --- */
+        .header-glass {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ff3b30, #ff9500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border-radius: var(--radius-m);
+            border: none;
+            background: rgba(0,0,0,0.05);
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .search-bar:focus {
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2);
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* --- SECTIONS --- */
+        .section {
+            padding: 20px 15px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .see-all {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* --- CARDS --- */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+            gap: 15px;
+        }
+
+        .app-card {
+            background: transparent;
+            transition: transform 0.2s ease;
+        }
+
+        .app-card:active {
+            transform: scale(0.92);
+        }
+
+        .icon-wrapper {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: white;
+            border-radius: 22%; /* Courbe iconique iOS */
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .icon-wrapper i {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+
+        .app-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .app-cat {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+            display: block;
+        }
+
+        /* --- BOUTON INSTALL --- */
+        .btn-install {
+            margin-top: 6px;
+            background: #f1f1f2;
+            color: var(--primary);
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        /* --- NAVIGATION BAS --- */
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+            border-top: 1px solid rgba(0,0,0,0.05);
+            z-index: 2000;
+        }
+
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            font-size: 1.3rem;
+        }
+
+        /* --- HERO SLIDER --- */
+        .hero-banner {
+            margin: 15px;
+            height: 180px;
+            background: linear-gradient(45deg, #1d1d1f, #434343);
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner h2 { font-size: 1.6rem; font-weight: 800; z-index: 2; }
+        .hero-banner p { font-size: 0.9rem; opacity: 0.8; z-index: 2; }
+        
+        .hero-circle {
+            position: absolute;
+            right: -50px;
+            top: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header-glass">
+        <div class="header-top">
+            <div class="logo">SAFICE</div>
+            <div class="user-profile"><i class="fa-solid fa-circle-user fa-2x"></i></div>
+        </div>
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-bar" placeholder="Jeux, applications, APK...">
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-banner">
+            <div class="hero-circle"></div>
+            <p>NOUVEAUTÉ</p>
+            <h2>Safice AI Pro</h2>
+            <p>L'intelligence artificielle en Haïti.</p>
+        </section>
+
+        <section class="section" style="padding-bottom: 0;">
+            <div class="app-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="nav-link"><i class="fa-solid fa-gamepad" style="color:#5856d6"></i><span>Jeux</span></div>
+                <div class="nav-link"><i class="fa-solid fa-bolt" style="color:#ffcc00"></i><span>Flash</span></div>
+                <div class="nav-link"><i class="fa-solid fa-shield-heart" style="color:#4cd964"></i><span>Santé</span></div>
+                <div class="nav-link"><i class="fa-solid fa-ellipsis" style="color:#8e8e93"></i><span>Plus</span></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Populaires</h2>
+                <a href="#" class="see-all">Tout voir</a>
+            </div>
+            
+            <div class="app-grid">
+                <div class="app-card" onclick="window.location='#install'">
+                    <div class="icon-wrapper">
+                        <img src="https://api.dicebear.com/7.x/shapes/svg?seed=camera" alt="icon">
+                    </div>
+                    <span class="app-name">Safice Cam</span>
+                    <span class="app-cat">Photo</span>
+                    <button class="btn-install">Obtenir</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="icon-wrapper" style="background: #1d1d1f;">
+                        <i class="fa-solid fa-brain" style="color: white;"></i>
+                    </div>
+                    <span class="app-name">Safice AI</span>
+                    <span class="app-cat">Outils</span>
+                    <button class="btn-install">Obtenir</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="icon-wrapper">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=game" alt="icon">
+                    </div>
+                    <span class="app-name">Runner Z</span>
+                    <span class="app-cat">Jeux</span>
+                    <button class="btn-install">Obtenir</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="icon-wrapper">
+                        <img src="https://api.dicebear.com/7.x/identicon/svg?seed=vpn" alt="icon">
+                    </div>
+                    <span class="app-name">S-VPN</span>
+                    <span class="app-cat">Sécurité</span>
+                    <button class="btn-install">Obtenir</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="nav-bottom">
+        <a href="#" class="nav-link active">
+            <i class="fa-solid fa-house"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="#" class="nav-link">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Apps</span>
+        </a>
+        <a href="#" class="nav-link">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>Jeux</span>
+        </a>
+        <a href="#" class="nav-link">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Rechercher</span>
+        </a>
+    </nav>
+
+</body>
+</html>
